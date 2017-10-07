@@ -8,7 +8,7 @@ from google.appengine.ext.webapp import template
 from google.appengine.ext import ndb    
 from facebook import FacebookHandler
 from google_handler import GoogleHandler
-
+from main_handler import MainHandler
 
 
 import logging
@@ -24,9 +24,7 @@ from utility import BaseHandler
 from utility import user_required
 
 
-class MainHandler(BaseHandler):
-    def get(self):
-        self.render_template('home.html')
+
 
 
 class SignupHandler(BaseHandler):
