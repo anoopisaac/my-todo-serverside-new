@@ -1,0 +1,11 @@
+.users{
+    display: flex;
+    flex-direction: column
+}
+.user{
+    display: flex;
+    flex-direction: row
+}
+.user>div{
+    margin: 5px;
+}

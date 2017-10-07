@@ -3,19 +3,25 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<link rel="stylesheet" href="/css/styles.css">
 	<title>Document</title>
 </head>
 <body>
 	<a href='https://www.facebook.com/dialog/oauth?client_id=288727298296356&redirect_uri=http://hello12345.test.com:8080/fbsignin&scope=email'>facebook</a>
 	<a href='/_ah/login?continue=http%3A//localhost%3A8080/gglsignin'>Google</a>
 
-	<div>
+	<div class="users">
 		{% for user in users %}
-			<div>{{user['auth_ids']}}</div>
-			<div></div>
-			<div></div>
-	  	{% endfor %}
+			<div class="user">
+				
+					<div>{{user.auth_ids}}</div>
+					<div>{{user.email_address}}</div>
+					<div>{{user.name}}</div>
+				
+			</div>
+		{% endfor %}
 	</div>
+	
 	
 </body>
 </html>

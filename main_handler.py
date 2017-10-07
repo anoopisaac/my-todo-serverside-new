@@ -27,10 +27,11 @@ class MainHandler(BaseHandler):
         self.render_template('login1.html',params)
 
     def get_users(self):
-        user=User();
-        user.get
+        #user=User()
         qry = User.query()
-        users = qry.fetch(20)
-        user=users[0];
-       
-        return users;
+        users = qry.fetch(20)       
+        for user in users:
+            logging.info(user.email_address)
+            logging.info(','.join(user.auth_ids))
+
+        return users

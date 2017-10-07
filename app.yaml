@@ -3,6 +3,8 @@ api_version: 1
 threadsafe: yes
 
 handlers:
+- url: /css
+  static_dir: css
 - url: /signup
   script: main.app
   secure: always
