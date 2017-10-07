@@ -21,6 +21,7 @@ from utility import Utility
 
 class MainHandler(BaseHandler):
     def get(self):
+        
         params = {
             'users': self.get_users()
         }

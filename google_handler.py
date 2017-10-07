@@ -34,11 +34,15 @@ class GoogleHandler(BaseHandler):
                                                     None,
                                                     email_address=user.email(), name="test",
                                                     last_name="last_name", verified=True)
+        
+
         if not user_data[0]:  # user_data is a tuple
             logging.warning("insdie ifff.... data %r...%r",user_data[0],user_data[1]) 
             self.display_message('Unable to create user for email %s because of \
             duplicate keys %s' % ("user_name", user_data[1]))
             return
+        
+        Utility.set_stay_logged_cookie(self.response,user_data[1])
         #logging.warning("user data %r",user_data) 
         logging.warning("outside ifff.... data %r...%r",user_data[0],user_data[1]) 
         self.auth.set_session(

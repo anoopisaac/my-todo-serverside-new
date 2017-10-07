@@ -10,11 +10,16 @@ import webapp2
 from webapp2_extras import auth
 from webapp2_extras import sessions
 
+from models import User
+
 from webapp2_extras.auth import InvalidAuthIdError
 from webapp2_extras.auth import InvalidPasswordError
 import urllib
 import json
+import hashlib
+import time
 
+SALT = "123-2343-abc&533"
 
 def user_required(handler):
     """
@@ -32,6 +37,27 @@ def user_required(handler):
     return check_login
 
 class Utility:
+
+    cookie_value = self.request.cookies.get('stay_logged')
+        user_id
+
+     @classmethod
+    def is_user_logged_in(cls,response,user):
+        stay_logged_hash=Utility.get_stay_loggedin_hash();
+        cookie_value='{}:{}'.format(",".join(user.auth_ids), stay_logged_hash)
+        response.set_cookie('stay_logged',cookie_value , max_age=360, path='/' )
+
+    @classmethod
+    def set_stay_logged_cookie(cls,response,user):
+        stay_logged_hash=Utility.get_stay_loggedin_hash();
+        cookie_value='{}:{}'.format(",".join(user.auth_ids), stay_logged_hash)
+        response.set_cookie('stay_logged',cookie_value , max_age=360, path='/' )
+
+
+    @classmethod
+    def get_stay_loggedin_hash(cls):
+        string_to_hash='{}:{}'.format(SALT, time.time())
+        return hashlib.sha512( string_to_hash ).hexdigest()
     @classmethod
     def get_json_response(cls, url):
         """
