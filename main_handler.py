@@ -20,12 +20,17 @@ from utility import Utility
 
 
 class MainHandler(BaseHandler):
+    # def get(self):
+    #     my_user=User.query(User.auth_ids == "anoopisaac@gmail.com").get()
+    #     params = {
+    #         'users': self.get_users(),
+    #         'cls':User,
+    #         'user1':my_user
+    #     }
+    #     self.render_template('login1.html',params)
+
     def get(self):
-        
-        params = {
-            'users': self.get_users()
-        }
-        self.render_template('login1.html',params)
+        self.render_template('home.html')
 
     def get_users(self):
         #user=User()

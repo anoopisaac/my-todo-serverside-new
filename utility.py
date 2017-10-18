@@ -18,8 +18,12 @@ import urllib
 import json
 import hashlib
 import time
+import random
 
-SALT = "123-2343-abc&533"
+#salt for the cookie stay logged in cookie hash
+SALT = "1#b3-23$6-a@34-c&53"
+#would decide max range of random no. used for stay_logged in cookie, if some request has this no. matching and only the hash not matching would mean some real user is trying to mess with the system, if not its a bot
+RANDOM_RANGE=1000000000000
 
 def user_required(handler):
     """
@@ -36,20 +40,36 @@ def user_required(handler):
 
     return check_login
 
-class Utility:
 
-    cookie_value = self.request.cookies.get('stay_logged')
-        user_id
+#class DataStoreUtility:
+    
 
-     @classmethod
+class AuthUtility:
+    #cookie_value = self.request.cookies.get('stay_logged')
+    #user_id
+
+    @classmethod
+    def get_series(cls):
+        return random.random()*RANDOM_RANGE
+    @classmethod
+    def get_user_from_cookie(cls,request):
+        cookie_value = request.request.cookies.get('stay_logged')
+        if cookie_value:
+            value_split=cookie_value.split(":")
+            user_id,series,stay_logged_hash=value_split[0],value_split[1],value_split[2]
+            user_from_cookie=User.get_by_auth_id(user_id)
+            # if user_from_cookie:
+
+
+    @classmethod
     def is_user_logged_in(cls,response,user):
-        stay_logged_hash=Utility.get_stay_loggedin_hash();
-        cookie_value='{}:{}'.format(",".join(user.auth_ids), stay_logged_hash)
+        stay_logged_hash=cls.get_stay_loggedin_hash();
+        cookie_value='{}:{}:{}'.format(",".join(user.auth_ids),cls.get_series(), stay_logged_hash)
         response.set_cookie('stay_logged',cookie_value , max_age=360, path='/' )
 
     @classmethod
     def set_stay_logged_cookie(cls,response,user):
-        stay_logged_hash=Utility.get_stay_loggedin_hash();
+        stay_logged_hash=cls.get_stay_loggedin_hash();
         cookie_value='{}:{}'.format(",".join(user.auth_ids), stay_logged_hash)
         response.set_cookie('stay_logged',cookie_value , max_age=360, path='/' )
 
@@ -58,6 +78,9 @@ class Utility:
     def get_stay_loggedin_hash(cls):
         string_to_hash='{}:{}'.format(SALT, time.time())
         return hashlib.sha512( string_to_hash ).hexdigest()
+
+class Utility:
+
     @classmethod
     def get_json_response(cls, url):
         """
